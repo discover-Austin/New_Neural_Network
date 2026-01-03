@@ -1,0 +1,57 @@
+from setuptools import setup, find_packages
+
+setup(
+    name="advanced-nlp-llm-system",
+    version="0.1.0",
+    description="Bleeding-edge Neural Network NLP/NLU/LLM System with comprehensive capabilities",
+    author="Advanced AI Research",
+    author_email="research@example.com",
+    packages=find_packages(where="src"),
+    package_dir={"": "src"},
+    python_requires=">=3.10",
+    install_requires=[
+        "torch>=2.1.0",
+        "transformers>=4.36.0",
+        "tokenizers>=0.15.0",
+        "sentencepiece>=0.1.99",
+        "datasets>=2.16.0",
+        "accelerate>=0.25.0",
+        "deepspeed>=0.12.0",
+        "bitsandbytes>=0.41.0",
+        "peft>=0.7.0",
+        "trl>=0.7.0",
+        "numpy>=1.24.0",
+        "einops>=0.7.0",
+        "faiss-cpu>=1.7.4",
+        "chromadb>=0.4.0",
+    ],
+    extras_require={
+        "dev": [
+            "pytest>=7.4.0",
+            "pytest-asyncio>=0.21.0",
+            "pytest-cov>=4.1.0",
+            "black>=23.12.0",
+            "ruff>=0.1.0",
+            "mypy>=1.8.0",
+        ],
+        "multimodal": [
+            "torchvision>=0.16.0",
+            "torchaudio>=2.1.0",
+            "opencv-python>=4.8.0",
+            "pillow>=10.0.0",
+            "librosa>=0.10.0",
+        ],
+        "serving": [
+            "fastapi>=0.108.0",
+            "uvicorn>=0.25.0",
+            "pydantic>=2.5.0",
+        ],
+    },
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Science/Research",
+        "Topic :: Scientific/Engineering :: Artificial Intelligence",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+    ],
+)
