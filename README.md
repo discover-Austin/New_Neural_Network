@@ -19,7 +19,7 @@ This repository contains **~16,000 lines** of production-quality Python code imp
 - ❌ Pre-trained model weights (load from HuggingFace or train yourself)
 - ❌ Training datasets
 - ❌ Complete end-to-end training scripts (build using components)
-- ❌ Extensive test coverage (1 test file currently)
+- ⚠️ Limited test coverage (5 test files with 1,867 lines, expanding)
 
 ## Features
 
