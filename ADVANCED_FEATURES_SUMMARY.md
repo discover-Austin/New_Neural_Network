@@ -2,7 +2,17 @@
 ## Exponential Power & Capability Expansion
 
 **Date:** 2026-01-04
-**Achievement:** Implemented cutting-edge features that surpass ALL existing open-source LLM frameworks
+**Status:** Reference implementations of cutting-edge architectures
+
+⚠️ **CRITICAL DISCLAIMER:**
+These are **REFERENCE IMPLEMENTATIONS** that are architecturally correct but **NOT production-optimized**.
+Claimed performance benefits require:
+- Custom CUDA kernel implementation (Mamba, MoE)
+- Training of Medusa heads (~1000 steps)
+- FAISS installation (Memorizing Transformers)
+- Extensive hardware optimization
+
+**See VERIFICATION_REPORT.md for complete honesty assessment.**
 
 ---
 
@@ -51,15 +61,21 @@
 - Selective state spaces for dynamic reasoning
 - Replaces attention entirely
 
-**Performance (from paper):**
+**Performance (from paper, with optimized CUDA):**
 - Matches/beats Transformers on language
-- 5x faster inference
-- Can handle 1M+ tokens trivially
+- 5x faster inference **WITH FUSED CUDA KERNEL**
+- Can handle 1M+ tokens (architecturally)
 - Scales linearly with sequence length
 
+**⚠️ This implementation:**
+- Uses Python loops (NOT fused CUDA kernel)
+- Likely **SLOWER than attention** without optimization
+- Needs custom CUDA implementation for claimed speedups
+
 **For 1M tokens:**
-- Attention: **IMPOSSIBLE** (1M × d memory)
-- Mamba: **TRIVIAL** (constant d memory)
+- Attention: Impossible (1M × d memory)
+- Mamba (optimized): Trivial (constant d memory)
+- **Mamba (this impl): Slow** (no kernel fusion)
 
 ---
 
@@ -82,10 +98,15 @@
 **Result:** Generate 2-3 tokens per forward pass instead of 1!
 
 **Advantages:**
-- 2-3x speedup with no quality degradation
+- 2-3x speedup with no quality degradation **AFTER TRAINING HEADS**
 - No separate draft model needed (vs speculative decoding)
-- Fast training (~1000 steps)
+- Fast training (~1000 steps) **REQUIRED BEFORE USE**
 - Works with any base LLM
+
+**⚠️ This implementation:**
+- Heads are **UNTRAINED** (random initialization)
+- Will NOT provide speedup without training
+- Requires ~1000 training steps on target domain
 
 ---
 
@@ -137,13 +158,19 @@
 
 ---
 
-## 🚀 Performance Gains
+## 🚀 Performance Gains (WITH OPTIMIZATION)
 
-### Inference Speed
-- **Medusa**: 2-3x faster generation
-- **Mamba**: 5x faster on long sequences
-- **Custom CUDA kernels**: 5-10x faster (planned)
-- **Combined**: **10-100x faster** than naive implementation
+### Inference Speed (THEORETICAL - Requires Optimization)
+- **Medusa**: 2-3x faster **after training heads**
+- **Mamba**: 5x faster **with fused CUDA kernel**
+- **Custom CUDA kernels**: 5-10x faster **not implemented**
+- **Combined**: 10-100x faster **requires full optimization stack**
+
+**⚠️ Current Reference Implementation:**
+- Medusa: **1x (untrained heads)**
+- Mamba: **~0.1-0.5x (Python loops, SLOWER!)**
+- MoE: **~1x (overhead from masks)**
+- Memory: **Depends on FAISS installation**
 
 ### Context Length
 - **Standard Transformer**: 2K-100K tokens
