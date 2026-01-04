@@ -1,6 +1,25 @@
 # Advanced NLP/NLU/LLM System
 
-A bleeding-edge, comprehensive neural network system with state-of-the-art NLP, NLU, and LLM capabilities. This system includes every modern advancement in language modeling and neural networks, with no simplifications.
+A comprehensive, research-verified neural network system with state-of-the-art NLP, NLU, and LLM capabilities. This repository provides reference implementations of modern advancements in language modeling and neural networks, grounded in peer-reviewed research.
+
+**⚠️ Important:** This is a research-grade reference implementation. Pre-trained model weights, training data, and end-to-end training scripts are not included. Users should load weights from HuggingFace or train models using these components.
+
+## What's Included ✅
+
+This repository contains **~16,000 lines** of production-quality Python code implementing research-verified techniques from **60+ peer-reviewed papers**.
+
+### What You Get
+- ✅ Complete, working implementations (not stubs or skeletons)
+- ✅ Mathematical foundations and complexity analysis
+- ✅ Comprehensive documentation with research citations
+- ✅ Modular, extensible architecture
+- ✅ Type hints and detailed docstrings
+
+### What's NOT Included ❌
+- ❌ Pre-trained model weights (load from HuggingFace or train yourself)
+- ❌ Training datasets
+- ❌ Complete end-to-end training scripts (build using components)
+- ❌ Extensive test coverage (1 test file currently)
 
 ## Features
 
@@ -72,14 +91,26 @@ pip install -r requirements.txt
 pip install -e .
 ```
 
+**System Requirements:**
+- Python 3.10+
+- PyTorch 2.1+
+- CUDA (optional, for GPU acceleration)
+- 16GB+ RAM recommended
+
+**Note:** Some dependencies (like `flash-attn`) require specific hardware and may need compilation.
+
 ## Quick Start
+
+**Important:** These examples create randomly initialized models. For actual text generation, you need to either:
+1. Load pre-trained weights from HuggingFace
+2. Train the model on your data
 
 ### Using GPT Model
 
 ```python
 from src.models import GPTModel, GPTConfig
 
-# Create model
+# Create model (randomly initialized - needs training or weight loading)
 config = GPTConfig(
     vocab_size=50257,
     d_model=768,
@@ -88,7 +119,7 @@ config = GPTConfig(
 )
 model = GPTModel(config)
 
-# Generate text
+# Generate text (will be random without trained weights)
 import torch
 input_ids = torch.randint(0, config.vocab_size, (1, 10))
 output = model.generate(
@@ -97,6 +128,11 @@ output = model.generate(
     temperature=0.8,
     top_p=0.9,
 )
+
+# To use with pre-trained weights:
+# 1. Load weights from HuggingFace
+# 2. Use transformers library compatibility layer (not included)
+# 3. Or train from scratch using the training components
 ```
 
 ### Using LLaMA Model

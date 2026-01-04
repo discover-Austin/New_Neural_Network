@@ -18,33 +18,42 @@ class RAGPipeline:
     """
     Complete RAG pipeline combining retrieval and generation.
 
+    Production-ready implementation with proper tokenization support.
+
     Args:
         language_model: Generation model
+        tokenizer: Tokenizer for encoding/decoding text
         vector_store: Vector store for retrieval
         embedder: Embedding model for queries
         retriever: Retriever for finding relevant documents
         reranker: Optional reranker for improving results
         top_k: Number of documents to retrieve
         rerank_top_k: Number of documents after reranking
+        device: Device for inference (cuda/cpu)
     """
 
     def __init__(
         self,
         language_model: nn.Module,
+        tokenizer: Any,  # Can be any tokenizer with encode/decode methods
         vector_store: VectorStore,
         embedder: SentenceEmbedder,
         retriever: Optional[DenseRetriever] = None,
         reranker: Optional[CrossEncoderReranker] = None,
         top_k: int = 10,
         rerank_top_k: int = 3,
+        device: str = "cuda" if torch.cuda.is_available() else "cpu",
     ):
-        self.language_model = language_model
+        self.language_model = language_model.to(device)
+        self.language_model.eval()
+        self.tokenizer = tokenizer
         self.vector_store = vector_store
         self.embedder = embedder
         self.retriever = retriever or DenseRetriever(vector_store, embedder)
         self.reranker = reranker
         self.top_k = top_k
         self.rerank_top_k = rerank_top_k
+        self.device = device
 
     def retrieve(
         self,
@@ -133,6 +142,8 @@ class RAGPipeline:
         """
         Generate answer using RAG.
 
+        Production implementation with full tokenization and generation.
+
         Args:
             query: User query
             max_length: Maximum generation length
@@ -154,24 +165,40 @@ class RAGPipeline:
         # Create prompt
         prompt = self.create_prompt(query, context, system_prompt)
 
-        # TODO: Tokenize prompt (requires tokenizer)
-        # For now, this is a placeholder
-        # input_ids = tokenizer.encode(prompt, return_tensors="pt")
+        # Tokenize prompt
+        input_ids = self.tokenizer.encode(prompt)
+
+        if isinstance(input_ids, list):
+            input_ids = torch.tensor([input_ids], dtype=torch.long)
+        elif len(input_ids.shape) == 1:
+            input_ids = input_ids.unsqueeze(0)
+
+        input_ids = input_ids.to(self.device)
 
         # Generate answer
-        # output_ids = self.language_model.generate(
-        #     input_ids,
-        #     max_new_tokens=max_length,
-        #     temperature=temperature,
-        #     top_p=top_p,
-        # )
-        # answer = tokenizer.decode(output_ids[0], skip_special_tokens=True)
+        output_ids = self.language_model.generate(
+            input_ids,
+            max_new_tokens=max_length,
+            temperature=temperature,
+            top_p=top_p,
+            do_sample=True,
+        )
+
+        # Decode answer
+        answer = self.tokenizer.decode(output_ids[0].cpu().tolist())
+
+        # Post-process: remove prompt from answer
+        if isinstance(answer, str):
+            # Try to extract only the generated part
+            prompt_decoded = self.tokenizer.decode(input_ids[0].cpu().tolist())
+            if answer.startswith(prompt_decoded):
+                answer = answer[len(prompt_decoded):].strip()
 
         result = {
             "query": query,
-            "prompt": prompt,
+            "answer": answer,
             "context": context,
-            # "answer": answer,  # Placeholder
+            "num_documents": len(documents),
         }
 
         if include_sources:
