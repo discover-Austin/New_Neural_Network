@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This is a **PhD-level, research-verified reference implementation** of an NLP/NLU/LLM system implementing cutting-edge techniques from peer-reviewed research. Every component is grounded in published papers with mathematical proofs, complexity analysis, and empirical validation.
+This is a **research-verified reference implementation** of an NLP/NLU/LLM system implementing cutting-edge techniques from peer-reviewed research. Every component is grounded in published papers with mathematical proofs, complexity analysis, and empirical validation.
 
 **Total Implementation:**
 - **~16,000 lines of code** (verified: 15,990 lines)
@@ -17,7 +17,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 - ⚠️ Training datasets NOT included
 - ⚠️ Limited test coverage (contributions welcome)
 
----
 
 ## Architecture Overview
 
@@ -63,7 +62,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
    - GLU variants (Gated Linear Units)
    - **Mixture of Experts** (Shazeer et al., 2017) - Conditional computation
 
----
 
 ## Advanced Research Components
 
@@ -85,7 +83,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 - **Results:** 2-3x speedup with <1% accuracy loss
 - **Features:** Multi-signal confidence (entropy, max-prob, margin, consistency)
 
----
 
 ## Generation Strategies
 
@@ -96,7 +93,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 5. **Contrastive Decoding** - Li et al., 2023
 6. **Speculative Decoding** - Leviathan et al., 2023 (2-3x speedup)
 
----
 
 ## Retrieval-Augmented Generation (RAG)
 
@@ -113,7 +109,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 - **Cross-Encoder** - BERT-based reranking
 - **MonoT5** - T5 for reranking
 
----
 
 ## Fine-Tuning Methods (PEFT)
 
@@ -130,7 +125,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 4. **Prompt Tuning** - Lester et al., 2021
    - Learn continuous prompts
 
----
 
 ## Alignment & RLHF
 
@@ -139,7 +133,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 3. **DPO** - Direct Preference Optimization (Rafailov et al., 2023)
    - Simpler than PPO, no RL needed
 
----
 
 ## Tokenization Systems
 
@@ -157,7 +150,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
    - Simple baseline
    - Good for small vocabularies
 
----
 
 ## Training Infrastructure
 
@@ -207,7 +199,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 4. **Cyclic Cosine** (SGDR)
    - Periodic restarts for exploration
 
----
 
 ## Natural Language Understanding (NLU)
 
@@ -256,7 +247,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
    - Multi-domain state tracking
    - Used in task-oriented dialogue
 
----
 
 ## Reasoning Modules
 
@@ -288,7 +278,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 - **Search:** BFS, DFS, Best-First
 - **Results:** 74% success on Game of 24 (vs 4% with CoT)
 
----
 
 ## Tool Use & Function Calling
 
@@ -310,7 +299,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
    - Search (information retrieval)
    - Extensible tool registry
 
----
 
 ## Multimodal Components
 
@@ -343,7 +331,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
    - End-to-end VQA systems
    - Multimodal understanding
 
----
 
 ## Quantization Methods
 
@@ -371,7 +358,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
    - Smooths activation outliers
    - Enables INT8 for LLMs
 
----
 
 ## Implementation Statistics
 
@@ -392,7 +378,6 @@ This is a **PhD-level, research-verified reference implementation** of an NLP/NL
 - **Years:** 2016-2024
 - **Topics:** Transformers, LLMs, NLU, Multimodal, Quantization
 
----
 
 ## File Structure
 
@@ -481,7 +466,6 @@ src/
     └── quantization.py
 ```
 
----
 
 ## Key Achievements
 
@@ -513,7 +497,6 @@ src/
 ✓ Multimodal
 ✓ Quantization
 
----
 
 ## Usage Examples
 
@@ -573,7 +556,6 @@ quantizer = AWQQuantizer(config)
 weight_quant, scales = quantizer.quantize_layer(weight, calibration_inputs)
 ```
 
----
 
 ## Conclusion
 
